@@ -32,8 +32,25 @@
 ## 실행 화면 (과제2)
 - 코드의 실행 스크린샷과 구현 내용 설명
 
-![실행화면](img/screenshot-2.png)
+![실행화면](img/sc2.png)
 
 - 구현한 내용 (위 그림 참조)
   - 패스워드 입력 내용 숨기기 : UseSystemPasswordChar 속성 이용
   - Placeholder 메시지를 표시할 때는 UseSystemPasswordChar 없애기
+
+
+## 실행 화면 (과제3)
+- 코드의 실행 스크린샷과 구현 내용 설명
+
+![실행화면](img/sc3-1.png)
+
+![실행화면](img/sc3-2.png)
+
+![실행화면](img/sc3-3.png)
+
+![실행화면](img/sc3-4.png)
+
+- 구현한 내용 (위 그림 참조)
+  - 패스워드 입력 내용 숨기기 : UseSystemPasswordChar 속성 이용
+  - Placeholder 메시지를 표시할 때는 UseSystemPasswordChar 없애기 
+
