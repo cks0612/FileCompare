@@ -1,3 +1,5 @@
+using static System.ComponentModel.Design.ObjectSelectorEditor;
+
 namespace FileCompare
 {
     public partial class Form1 : Form
@@ -7,32 +9,76 @@ namespace FileCompare
             InitializeComponent();
         }
 
-        private void CopyFileWithConfirm(string source, string dest)
+        private void CopySelectedItems(ListView sourceLv, string sourceRoot, string targetRoot)
         {
-            if (!File.Exists(source))
+            if (string.IsNullOrWhiteSpace(sourceRoot) || string.IsNullOrWhiteSpace(targetRoot))
                 return;
 
-            if (File.Exists(dest))
+            foreach (ListViewItem item in sourceLv.SelectedItems)
             {
-                DateTime srcTime = File.GetLastWriteTime(source);
-                DateTime destTime = File.GetLastWriteTime(dest);
+                string name = item.Text;
+                bool isDir = item.SubItems[1].Text == "<DIR>";
 
-                if (destTime > srcTime)
+                string sourcePath = Path.Combine(sourceRoot, name);
+                string targetPath = Path.Combine(targetRoot, name);
+
+                try
                 {
-                    var result = MessageBox.Show(
-                        "대상 파일이 더 최신입니다.\n그래도 덮어쓰시겠습니까?",
-                        "복사 확인",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning);
+                    // 📁 폴더는 일단 그대로 복사 (필요하면 확장 가능)
+                    if (isDir)
+                    {
+                        CopyDirectory(sourcePath, targetPath);
+                        continue;
+                    }
 
-                    if (result != DialogResult.Yes)
-                        return;
+                    // 📄 파일 처리
+                    if (File.Exists(targetPath))
+                    {
+                        DateTime srcTime = File.GetLastWriteTime(sourcePath);
+                        DateTime tgtTime = File.GetLastWriteTime(targetPath);
+
+                        // ⚠️ 대상이 더 최신이면 경고
+                        if (tgtTime > srcTime)
+                        {
+                            var result = MessageBox.Show(
+                                $"대상 파일이 더 최신입니다.\n\n" +
+                                $"원본: {srcTime}\n" +
+                                $"대상: {tgtTime}\n\n" +
+                                $"그래도 덮어쓰시겠습니까?",
+                                "덮어쓰기 확인",
+                                MessageBoxButtons.YesNo,
+                                MessageBoxIcon.Warning);
+
+                            if (result != DialogResult.Yes)
+                                continue;
+                        }
+                    }
+
+                    File.Copy(sourcePath, targetPath, true);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"복사 실패: {name}\n{ex.Message}");
                 }
             }
-
-            File.Copy(source, dest, true);
         }
 
+        private void CopyDirectory(string sourceDir, string targetDir)
+        {
+            Directory.CreateDirectory(targetDir);
+
+            foreach (var file in Directory.GetFiles(sourceDir))
+            {
+                string destFile = Path.Combine(targetDir, Path.GetFileName(file));
+                File.Copy(file, destFile, true);
+            }
+
+            foreach (var dir in Directory.GetDirectories(sourceDir))
+            {
+                string destDir = Path.Combine(targetDir, Path.GetFileName(dir));
+                CopyDirectory(dir, destDir);
+            }
+        }
 
         private void CompareLists()
         {
@@ -167,50 +213,15 @@ namespace FileCompare
         }
         private void btnCopyFromLeft_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(txtLeftDir.Text) || !Directory.Exists(txtRightDir.Text))
-            {
-                MessageBox.Show("폴더 경로가 올바르지 않습니다.");
-                return;
-            }
-
-            foreach (ListViewItem item in lvwLeftDir.SelectedItems)
-            {
-                if (item.SubItems[1].Text == "<DIR>")
-                    continue;
-
-                string fileName = item.Text;
-
-                string source = Path.Combine(txtLeftDir.Text, fileName);
-                string dest = Path.Combine(txtRightDir.Text, fileName);
-
-                CopyFileWithConfirm(source, dest);
-            }
+            CopySelectedItems(lvwLeftDir, txtLeftDir.Text, txtRightDir.Text);
 
             PopulateListView(lvwrightDir, txtRightDir.Text);
             CompareLists();
-
         }
 
         private void btnCopyFromRight_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(txtLeftDir.Text) || !Directory.Exists(txtRightDir.Text))
-            {
-                MessageBox.Show("폴더 경로가 올바르지 않습니다.");
-                return;
-            }
-
-            foreach (ListViewItem item in lvwrightDir.SelectedItems)
-            {
-                if (item.SubItems[1].Text == "<DIR>")
-                    continue;
-
-                string fileName = item.Text;
-
-                string source = Path.Combine(txtRightDir.Text, fileName);
-                string dest = Path.Combine(txtLeftDir.Text, fileName);
-
-                CopyFileWithConfirm(source, dest);
-            }
+            CopySelectedItems(lvwrightDir, txtRightDir.Text, txtLeftDir.Text);
 
             PopulateListView(lvwLeftDir, txtLeftDir.Text);
             CompareLists();
