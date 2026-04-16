@@ -84,13 +84,12 @@
             panel3.Dock = DockStyle.Bottom;
             panel3.Location = new Point(0, 178);
             panel3.Name = "panel3";
-            panel3.Padding = new Padding(50);
             panel3.Size = new Size(476, 275);
             panel3.TabIndex = 2;
             // 
             // lvwLeftDir
             // 
-            lvwLeftDir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            lvwLeftDir.Dock = DockStyle.Bottom;
             lvwLeftDir.Location = new Point(0, 3);
             lvwLeftDir.Name = "lvwLeftDir";
             lvwLeftDir.Size = new Size(476, 272);
@@ -99,20 +98,20 @@
             // 
             // panel2
             // 
-            panel2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel2.BackColor = SystemColors.ActiveCaption;
             panel2.Controls.Add(txtLeftDir);
             panel2.Controls.Add(btnLeftDir);
-            panel2.Location = new Point(0, 101);
+            panel2.Dock = DockStyle.Fill;
+            panel2.Location = new Point(0, 95);
             panel2.Name = "panel2";
-            panel2.Size = new Size(476, 352);
+            panel2.Size = new Size(476, 358);
             panel2.TabIndex = 1;
             // 
             // txtLeftDir
             // 
             txtLeftDir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             txtLeftDir.Font = new Font("한컴 말랑말랑 Bold", 12F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            txtLeftDir.Location = new Point(11, 38);
+            txtLeftDir.Location = new Point(11, 44);
             txtLeftDir.Name = "txtLeftDir";
             txtLeftDir.Size = new Size(330, 28);
             txtLeftDir.TabIndex = 3;
@@ -121,7 +120,7 @@
             // 
             btnLeftDir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnLeftDir.Font = new Font("한컴 말랑말랑 Bold", 15.7499981F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnLeftDir.Location = new Point(347, 29);
+            btnLeftDir.Location = new Point(347, 35);
             btnLeftDir.Name = "btnLeftDir";
             btnLeftDir.Size = new Size(126, 41);
             btnLeftDir.TabIndex = 2;
@@ -131,9 +130,9 @@
             // 
             // panel1
             // 
-            panel1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             panel1.Controls.Add(btnCopyFromLeft);
             panel1.Controls.Add(lblAppName);
+            panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(476, 95);
@@ -173,29 +172,29 @@
             // 
             // lvwrightDir
             // 
-            lvwrightDir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            lvwrightDir.Location = new Point(1, 3);
+            lvwrightDir.Dock = DockStyle.Bottom;
+            lvwrightDir.Location = new Point(0, 3);
             lvwrightDir.Name = "lvwrightDir";
-            lvwrightDir.Size = new Size(473, 272);
+            lvwrightDir.Size = new Size(474, 272);
             lvwrightDir.TabIndex = 0;
             lvwrightDir.UseCompatibleStateImageBehavior = false;
             // 
             // panel5
             // 
-            panel5.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             panel5.BackColor = SystemColors.ActiveCaption;
             panel5.Controls.Add(txtRightDir);
             panel5.Controls.Add(btnRightDir);
-            panel5.Location = new Point(-5, 101);
+            panel5.Dock = DockStyle.Fill;
+            panel5.Location = new Point(0, 95);
             panel5.Name = "panel5";
-            panel5.Size = new Size(479, 352);
+            panel5.Size = new Size(474, 358);
             panel5.TabIndex = 1;
             // 
             // txtRightDir
             // 
             txtRightDir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             txtRightDir.Font = new Font("한컴 말랑말랑 Bold", 12F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            txtRightDir.Location = new Point(17, 38);
+            txtRightDir.Location = new Point(12, 44);
             txtRightDir.Name = "txtRightDir";
             txtRightDir.Size = new Size(330, 28);
             txtRightDir.TabIndex = 2;
@@ -204,7 +203,7 @@
             // 
             btnRightDir.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnRightDir.Font = new Font("한컴 말랑말랑 Bold", 15.7499981F, FontStyle.Bold, GraphicsUnit.Point, 129);
-            btnRightDir.Location = new Point(353, 29);
+            btnRightDir.Location = new Point(348, 35);
             btnRightDir.Name = "btnRightDir";
             btnRightDir.Size = new Size(120, 41);
             btnRightDir.TabIndex = 1;
@@ -215,6 +214,7 @@
             // panel4
             // 
             panel4.Controls.Add(btnCopyFromRight);
+            panel4.Dock = DockStyle.Top;
             panel4.Location = new Point(0, 0);
             panel4.Name = "panel4";
             panel4.Size = new Size(474, 95);
